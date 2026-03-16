@@ -251,14 +251,14 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 6px 6px 6px 0;
+    padding: 0 0 0 12px;
 }
 
 .list {
     flex: 1;
     overflow: hidden;
     position: relative;
-    padding: 0 8px 0 6px;
+    padding: 0;
 }
 
 .list-track {
@@ -273,6 +273,7 @@ body {
     display: flex;
     align-items: center;
     height: 41px;
+    max-width: 95%;
     padding: 0 34px 0 10px;
     gap: 8px;
     cursor: pointer;
@@ -291,9 +292,10 @@ body {
 }
 
 /* Wheel depth levels */
-.row.depth-1 { opacity: 0.55; transform: scale(0.90) translateX(60px); }
-.row.depth-2 { opacity: 0.3; transform: scale(0.82) translateX(140px); }
-.row.depth-3 { opacity: 0; transform: scale(0.74) translateX(240px); pointer-events: none; }
+.row.depth-1 { opacity: 0.65; transform: scale(0.93) translateX(40px); }
+.row.depth-2 { opacity: 0.45; transform: scale(0.86) translateX(90px); }
+.row.depth-3 { opacity: 0.25; transform: scale(0.79) translateX(150px); }
+.row.depth-4 { opacity: 0; transform: scale(0.72) translateX(220px); pointer-events: none; }
 .row.hidden { opacity: 0; pointer-events: none; }
 
 .row.caught {
@@ -532,7 +534,7 @@ body {
     }
 
     .dex-right {
-        padding: 6px;
+        padding: 0 0 0 12px;
         max-height: 260px;
     }
 

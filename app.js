@@ -110,17 +110,17 @@ function updateWheel(animate) {
         const g = GOALS[i % N()];
         const dist = Math.abs(i - virtualIdx);
 
-        row.classList.remove('sel', 'depth-1', 'depth-2', 'depth-3');
+        row.classList.remove('sel', 'depth-1', 'depth-2', 'depth-3', 'depth-4');
         row.classList.toggle('caught', g.caught);
 
         if (dist === 0) {
             row.classList.add('sel');
             row.classList.remove('hidden');
-        } else if (dist <= 3) {
+        } else if (dist <= 4) {
             row.classList.add(`depth-${dist}`);
             row.classList.remove('hidden');
         } else {
-            row.classList.add('depth-3', 'hidden');
+            row.classList.add('depth-4', 'hidden');
         }
     });
 
@@ -186,13 +186,13 @@ function showDetail() {
     const ct = g.caught ? `<span class="d-caught-tag">${t('caught')}</span>` : '';
     const catLabel = t(g.category);
 
-    let datesHtml = '';
-    if (g.started || g.finished) {
-        const parts = [];
-        if (g.started) parts.push(`<span class="d-date-label">${t('started')}</span> <span class="d-date-value">${g.started}</span>`);
-        if (g.finished) parts.push(`<span class="d-date-label">${t('finished')}</span> <span class="d-date-value">${g.finished}</span>`);
-        datesHtml = `<div class="d-dates">${parts.join('<span class="d-date-sep">—</span>')}</div>`;
-    }
+    const startVal = g.started || '—';
+    const finishVal = g.finished || '—';
+    const datesHtml = `<div class="d-dates">
+        <span class="d-date-label">${t('started')}</span> <span class="d-date-value">${startVal}</span>
+        <span class="d-date-sep">—</span>
+        <span class="d-date-label">${t('finished')}</span> <span class="d-date-value">${finishVal}</span>
+    </div>`;
 
     const prog = g.progress || { current: 0, total: 1 };
     const pct = Math.round(prog.current / prog.total * 100);
