@@ -1,3 +1,8 @@
+// ===== PREVENT iOS BOUNCE SCROLL =====
+document.addEventListener('touchmove', function(e) {
+    if (!e.target.closest('.list')) e.preventDefault();
+}, { passive: false });
+
 // ===== STATE =====
 const LK = 'before30-lang';
 let selIdx = 0;

@@ -3,6 +3,10 @@
 html, body {
     overflow: hidden;
     height: 100%;
+    position: fixed;
+    width: 100%;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
 }
 
 body {
