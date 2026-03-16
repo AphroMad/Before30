@@ -181,7 +181,7 @@ function showDetail() {
     sprite.src = artUrl(g.pokemonId);
     sprite.className = g.caught ? '' : 'silhouette';
     sNum.textContent = '#' + String(g.id).padStart(3, '0');
-    sName.textContent = g.caught ? (PNAMES[g.pokemonId] || '???') : '???';
+    sName.textContent = gName(g).toUpperCase();
 
     const ct = g.caught ? `<span class="d-caught-tag">${t('caught')}</span>` : '';
     const catLabel = t(g.category);
@@ -203,10 +203,14 @@ function showDetail() {
     </div>`;
 
     detail.innerHTML =
-        `<div class="d-title-row"><span class="d-title">${gName(g).toUpperCase()}</span><span class="d-type" style="background:${TCOLORS[g.category]}">${catLabel}</span>${ct}</div>` +
-        `<div class="d-desc">${gDesc(g)}</div>` +
-        progressHtml +
-        `<div class="d-bottom-row">${datesHtml}<div class="d-stars">${g.difficulty}</div></div>`;
+        `<div class="d-top">` +
+            `<div class="d-title-row"><span class="d-title">${gName(g).toUpperCase()}</span><span class="d-type" style="background:${TCOLORS[g.category]}">${catLabel}</span>${ct}</div>` +
+            `<div class="d-desc">${gDesc(g)}</div>` +
+        `</div>` +
+        `<div class="d-bottom">` +
+            progressHtml +
+            `<div class="d-bottom-row">${datesHtml}<div class="d-stars">${g.difficulty}</div></div>` +
+        `</div>`;
 }
 
 // ===== LANGUAGE =====
