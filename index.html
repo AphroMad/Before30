@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before 30 — Pokédex</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ds">
+        <!-- LED cluster + lang toggle -->
+        <div class="ds-top">
+            <div class="ds-leds">
+                <div class="led led-big"></div>
+                <div class="led led-sm red"></div>
+                <div class="led led-sm yellow"></div>
+                <div class="led led-sm green"></div>
+            </div>
+            <div class="lang-toggle" id="lang-toggle">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+            </div>
+        </div>
+
+        <!-- Screen -->
+        <div class="screen-bezel">
+            <div class="screen">
+
+                <!-- Red header: title left, completion right -->
+                <div class="dex-header">
+                    <div class="header-ball"></div>
+                    <span id="h-title">BEFORE 30 POKÉDEX</span>
+                    <div class="header-right">
+                        <span class="progress-lbl" id="h-completion">COMPLETION</span>
+                        <div class="pbar-track"><div class="pbar-fill" id="pbar"></div></div>
+                        <span class="pbar-label" id="pbar-label">0/0</span>
+                    </div>
+                </div>
+
+                <!-- Deadline bar -->
+                <div class="dex-deadline">
+                    <span id="h-deadline">DEADLINE: MAY 24, 2030</span>
+                    <span id="h-countdown"></span>
+                </div>
+
+                <!-- Category filters -->
+                <div class="dex-filters" id="filters">
+                    <button class="filter-btn active" data-cat="all" data-key="all">ALL</button>
+                    <button class="filter-btn" data-cat="career" data-key="career"><span class="fdot" style="background:#f08030"></span>CAREER</button>
+                    <button class="filter-btn" data-cat="travel" data-key="travel"><span class="fdot" style="background:#6890f0"></span>TRAVEL</button>
+                    <button class="filter-btn" data-cat="health" data-key="health"><span class="fdot" style="background:#78c850"></span>HEALTH</button>
+                    <button class="filter-btn" data-cat="personal" data-key="personal"><span class="fdot" style="background:#f85888"></span>PERSONAL</button>
+                    <button class="filter-btn" data-cat="creative" data-key="creative"><span class="fdot" style="background:#a040a0"></span>CREATIVE</button>
+                    <button class="filter-btn" data-cat="finance" data-key="finance"><span class="fdot" style="background:#b8a038"></span>FINANCE</button>
+                </div>
+
+                <!-- Split: sprite + list -->
+                <div class="dex-body">
+                    <div class="dex-left">
+                        <div class="sprite-box">
+                            <div class="hatch"></div>
+                            <img id="sprite" src="" alt="">
+                        </div>
+                        <div class="sprite-label">
+                            <span id="s-num">#001</span>
+                            <span id="s-name">???</span>
+                        </div>
+                    </div>
+
+                    <div class="dex-right">
+                        <div class="list" id="list"></div>
+                    </div>
+                </div>
+
+                <!-- Detail bar -->
+                <div class="dex-detail" id="detail">
+                    <div class="detail-text" id="detail-text">
+                        Select a quest...
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="goals.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
