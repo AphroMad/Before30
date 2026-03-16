@@ -12,31 +12,53 @@ const TRAINER = {
 // ============================================
 const LANG = {
     en: {
-        title: "BEFORE 30 POKÉDEX",
+        title: "BEFORE 30 GOALDEX",
         completion: "COMPLETION",
         deadline: "DEADLINE: MAY 24, 2030",
         select: "Select a quest...",
         caught: "CAUGHT",
-        all: "ALL",
+        started: "STARTED",
+        finished: "FINISHED",
+        progress: "PROGRESS",
         career: "CAREER", travel: "TRAVEL", health: "HEALTH",
         personal: "PERSONAL", creative: "CREATIVE", finance: "FINANCE",
     },
     fr: {
-        title: "POKÉDEX AVANT 30",
+        title: "GOALDEX AVANT 30",
         completion: "COMPLÉTION",
         deadline: "DEADLINE : 24 MAI 2030",
         select: "Choisis une quête...",
         caught: "ATTRAPÉ",
-        all: "TOUT",
+        started: "DÉBUT",
+        finished: "FIN",
+        progress: "PROGRÈS",
         career: "CARRIÈRE", travel: "VOYAGE", health: "SANTÉ",
         personal: "PERSO", creative: "CRÉATIF", finance: "FINANCE",
     }
 };
 
 // ============================================
+//  POKEMON NAMES (by pokemonId)
+// ============================================
+const PNAMES = {
+    4:'CHARMANDER',6:'CHARIZARD',25:'PIKACHU',39:'JIGGLYPUFF',
+    52:'MEOWTH',53:'PERSIAN',58:'GROWLITHE',65:'ALAKAZAM',
+    107:'HITMONCHAN',124:'JYNX',132:'DITTO',137:'PORYGON',
+    144:'ARTICUNO',149:'DRAGONITE',150:'MEWTWO',257:'BLAZIKEN',
+    376:'METAGROSS',384:'RAYQUAZA'
+};
+
+// ============================================
 //  LIFE GOALS — name/description per language
 // ============================================
 const GOALS = [
+    // META
+    { id:0,  category:"creative", pokemonId:25,  difficulty:"★★☆☆☆", caught:true,
+      started: "2026-03-16", finished: "2026-03-16",
+      progress: { current:1, total:1 },
+      en: { name:"Ship this website",    desc:"Build and deploy this life goals website!" },
+      fr: { name:"Publier ce site",      desc:"Construire et déployer ce site d'objectifs de vie !" } },
+
     // CAREER
     { id:1,  category:"career",   pokemonId:6,   difficulty:"★★★★☆", caught:false,
       en: { name:"Land dream job",       desc:"Get a position at a company I'm truly passionate about." },
@@ -75,9 +97,13 @@ const GOALS = [
       en: { name:"New language",         desc:"Reach conversational fluency in a new language." },
       fr: { name:"Nouvelle langue",      desc:"Atteindre un niveau conversationnel dans une nouvelle langue." } },
     { id:11, category:"personal", pokemonId:65,  difficulty:"★★★★☆", caught:false,
+      progress: { current:42, total:100 },
+      started: "2024-01-15",
       en: { name:"Read 100 books",       desc:"Read 100 books across all genres." },
       fr: { name:"Lire 100 livres",      desc:"Lire 100 livres de tous genres." } },
     { id:12, category:"personal", pokemonId:4,   difficulty:"★★☆☆☆", caught:false,
+      progress: { current:18, total:50 },
+      started: "2023-06-01",
       en: { name:"50 recipes",           desc:"Cook 50 recipes from cuisines around the world." },
       fr: { name:"50 recettes",          desc:"Cuisiner 50 recettes de cuisines du monde entier." } },
 
@@ -88,10 +114,6 @@ const GOALS = [
     { id:14, category:"creative", pokemonId:137, difficulty:"★★★★☆", caught:false,
       en: { name:"Make a short film",    desc:"Write, shoot, and edit a short film." },
       fr: { name:"Faire un court-métrage", desc:"Écrire, tourner et monter un court-métrage." } },
-    { id:15, category:"creative", pokemonId:25,  difficulty:"★★☆☆☆", caught:true,
-      en: { name:"Ship this website",    desc:"Build and deploy this life goals website!" },
-      fr: { name:"Publier ce site",      desc:"Construire et déployer ce site d'objectifs de vie !" } },
-
     // FINANCE
     { id:16, category:"finance",  pokemonId:53,  difficulty:"★★★☆☆", caught:false,
       en: { name:"10K emergency fund",   desc:"Build a solid financial safety net." },

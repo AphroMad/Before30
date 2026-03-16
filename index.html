@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Before 30 — Pokédex</title>
+    <title>Before 30 — Goaldex</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,8 +19,8 @@
                 <div class="led led-sm green"></div>
             </div>
             <div class="lang-toggle" id="lang-toggle">
-                <button class="lang-btn active" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="fr">FR</button>
             </div>
         </div>
 
@@ -31,7 +31,7 @@
                 <!-- Red header: title left, completion right -->
                 <div class="dex-header">
                     <div class="header-ball"></div>
-                    <span id="h-title">BEFORE 30 POKÉDEX</span>
+                    <span id="h-title">BEFORE 30 GOALDEX</span>
                     <div class="header-right">
                         <span class="progress-lbl" id="h-completion">COMPLETION</span>
                         <div class="pbar-track"><div class="pbar-fill" id="pbar"></div></div>
@@ -43,17 +43,6 @@
                 <div class="dex-deadline">
                     <span id="h-deadline">DEADLINE: MAY 24, 2030</span>
                     <span id="h-countdown"></span>
-                </div>
-
-                <!-- Category filters -->
-                <div class="dex-filters" id="filters">
-                    <button class="filter-btn active" data-cat="all" data-key="all">ALL</button>
-                    <button class="filter-btn" data-cat="career" data-key="career"><span class="fdot" style="background:#f08030"></span>CAREER</button>
-                    <button class="filter-btn" data-cat="travel" data-key="travel"><span class="fdot" style="background:#6890f0"></span>TRAVEL</button>
-                    <button class="filter-btn" data-cat="health" data-key="health"><span class="fdot" style="background:#78c850"></span>HEALTH</button>
-                    <button class="filter-btn" data-cat="personal" data-key="personal"><span class="fdot" style="background:#f85888"></span>PERSONAL</button>
-                    <button class="filter-btn" data-cat="creative" data-key="creative"><span class="fdot" style="background:#a040a0"></span>CREATIVE</button>
-                    <button class="filter-btn" data-cat="finance" data-key="finance"><span class="fdot" style="background:#b8a038"></span>FINANCE</button>
                 </div>
 
                 <!-- Split: sprite + list -->
@@ -70,7 +59,9 @@
                     </div>
 
                     <div class="dex-right">
-                        <div class="list" id="list"></div>
+                        <div class="list" id="list">
+                            <div class="list-track" id="list-track"></div>
+                        </div>
                     </div>
                 </div>
 

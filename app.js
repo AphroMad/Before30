@@ -1,15 +1,14 @@
 // ===== STATE =====
-const SK = 'before30-caught';
 const LK = 'before30-lang';
-const caught = new Set(JSON.parse(localStorage.getItem(SK) || '[]'));
-GOALS.forEach(g => { if (caught.has(g.id)) g.caught = true; });
-let sel = null;
-let filter = 'all';
-let lang = localStorage.getItem(LK) || 'en';
+let selIdx = 0;
+let lang = localStorage.getItem(LK) || 'fr';
+const ROW_H = 44; // row height + gap
+const N = () => GOALS.length;
 
 // ===== DOM =====
 const $ = id => document.getElementById(id);
 const list = $('list');
+const track = $('list-track');
 const sprite = $('sprite');
 const sNum = $('s-num');
 const sName = $('s-name');
@@ -25,14 +24,6 @@ function t(key) { return LANG[lang][key] || LANG.en[key] || key; }
 function gName(g) { return (g[lang] || g.en).name; }
 function gDesc(g) { return (g[lang] || g.en).desc; }
 
-const PNAMES = {
-    4:'CHARMANDER',6:'CHARIZARD',25:'PIKACHU',39:'JIGGLYPUFF',
-    52:'MEOWTH',53:'PERSIAN',58:'GROWLITHE',65:'ALAKAZAM',
-    107:'HITMONCHAN',124:'JYNX',132:'DITTO',137:'PORYGON',
-    144:'ARTICUNO',149:'DRAGONITE',150:'MEWTWO',257:'BLAZIKEN',
-    376:'METAGROSS',384:'RAYQUAZA'
-};
-
 const TCOLORS = {
     career:'#f08030', travel:'#6890f0', health:'#78c850',
     personal:'#f85888', creative:'#a040a0', finance:'#b8a038'
@@ -41,6 +32,9 @@ const TCOLORS = {
 function artUrl(id) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 }
+
+sprite.addEventListener('error', () => { sprite.style.visibility = 'hidden'; });
+sprite.addEventListener('load', () => { sprite.style.visibility = 'visible'; });
 
 function ballSVG() {
     return `<svg viewBox="0 0 14 14" width="14" height="14">
@@ -59,24 +53,70 @@ function emptyBallSVG() {
     </svg>`;
 }
 
-function filtered() {
-    return filter === 'all' ? GOALS : GOALS.filter(g => g.category === filter);
+function wrap(i) {
+    return ((i % N()) + N()) % N();
 }
 
-// ===== RENDER =====
-function render() {
-    const goals = filtered();
-    list.innerHTML = '';
-    goals.forEach(g => {
-        const row = document.createElement('div');
-        row.className = 'row' + (g.caught ? ' caught' : '') + (g === sel ? ' sel' : '');
-        row.innerHTML =
-            `<div class="row-ball">${g.caught ? ballSVG() : emptyBallSVG()}</div>` +
-            `<span class="row-num">${String(g.id).padStart(3, '0')}</span>` +
-            `<span class="row-name">${gName(g).toUpperCase()}</span>` +
-            `<div class="row-dot" style="background:${TCOLORS[g.category]}"></div>`;
-        row.onclick = () => select(g);
-        list.appendChild(row);
+// ===== BUILD ROWS (3x for infinite illusion) =====
+const rowEls = []; // all DOM rows (3 * N)
+let virtualIdx = 0; // index in the middle copy (0..N-1 maps to rows N..2N-1)
+
+function buildRows() {
+    track.innerHTML = '';
+    rowEls.length = 0;
+
+    // Build 3 copies: [copy0][copy1=main][copy2]
+    for (let copy = 0; copy < 3; copy++) {
+        GOALS.forEach((g, i) => {
+            const row = document.createElement('div');
+            row.className = 'row';
+            row.innerHTML =
+                `<div class="row-ball">${g.caught ? ballSVG() : emptyBallSVG()}</div>` +
+                `<span class="row-num">${String(g.id).padStart(3, '0')}</span>` +
+                `<span class="row-name">${gName(g).toUpperCase()}</span>`;
+            row.addEventListener('click', () => {
+                selIdx = i;
+                virtualIdx = N() + i; // middle copy
+                updateWheel(true);
+                showDetail();
+            });
+            track.appendChild(row);
+            rowEls.push(row);
+        });
+    }
+
+    virtualIdx = N() + selIdx; // start in middle copy
+}
+
+// ===== WHEEL POSITION & DEPTH =====
+function updateWheel(animate) {
+    if (animate === false) {
+        track.style.transition = 'none';
+    } else {
+        track.style.transition = '';
+    }
+
+    const listH = list.clientHeight;
+    const offset = virtualIdx * ROW_H - (listH / 2) + (ROW_H / 2);
+    track.style.transform = `translateY(${-offset}px)`;
+
+    // Depth classes on ALL rows based on visual distance from virtualIdx
+    rowEls.forEach((row, i) => {
+        const g = GOALS[i % N()];
+        const dist = Math.abs(i - virtualIdx);
+
+        row.classList.remove('sel', 'depth-1', 'depth-2', 'depth-3');
+        row.classList.toggle('caught', g.caught);
+
+        if (dist === 0) {
+            row.classList.add('sel');
+            row.classList.remove('hidden');
+        } else if (dist <= 3) {
+            row.classList.add(`depth-${dist}`);
+            row.classList.remove('hidden');
+        } else {
+            row.classList.add('depth-3', 'hidden');
+        }
     });
 
     const c = GOALS.filter(g => g.caught).length;
@@ -84,106 +124,106 @@ function render() {
     pLabel.textContent = c + '/' + GOALS.length;
 }
 
-function select(g) {
-    sel = g;
+// After the transition, silently snap back to middle copy if needed
+function snapToMiddle() {
+    if (virtualIdx < N() || virtualIdx >= 2 * N()) {
+        selIdx = wrap(selIdx);
+        virtualIdx = N() + selIdx;
+        updateWheel(false);
+        // Force reflow then restore transition
+        track.offsetHeight;
+        track.style.transition = '';
+    }
+}
+
+track.addEventListener('transitionend', snapToMiddle);
+
+// ===== NAVIGATE =====
+function navigate(delta) {
+    selIdx = wrap(selIdx + delta);
+    virtualIdx += delta;
+    updateWheel(true);
+    showDetail();
+}
+
+// ===== MOUSE WHEEL (throttled: 1 step per scroll) =====
+let wheelLock = false;
+list.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (wheelLock) return;
+    wheelLock = true;
+    navigate(e.deltaY > 0 ? 1 : -1);
+    setTimeout(() => { wheelLock = false; }, 250);
+}, { passive: false });
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+});
+
+// ===== TOUCH SWIPE =====
+let touchStartY = 0;
+list.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; });
+list.addEventListener('touchend', e => {
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > 20) navigate(dy > 0 ? 1 : -1);
+});
+
+// ===== DETAIL =====
+function showDetail() {
+    const g = GOALS[selIdx];
     sprite.src = artUrl(g.pokemonId);
     sprite.className = g.caught ? '' : 'silhouette';
     sNum.textContent = '#' + String(g.id).padStart(3, '0');
     sName.textContent = g.caught ? (PNAMES[g.pokemonId] || '???') : '???';
 
-    const ct = g.caught ? ` <span class="d-caught-tag">${t('caught')}</span>` : '';
+    const ct = g.caught ? `<span class="d-caught-tag">${t('caught')}</span>` : '';
     const catLabel = t(g.category);
-    detail.innerHTML =
-        `<div class="d-title">${gName(g).toUpperCase()} ` +
-        `<span class="d-type" style="background:${TCOLORS[g.category]}">${catLabel}</span>${ct}</div>` +
-        `<div class="d-desc">${gDesc(g)}</div>` +
-        `<div class="d-stars">${g.difficulty}</div>`;
 
-    const goals = filtered();
-    list.querySelectorAll('.row').forEach((r, i) => r.classList.toggle('sel', goals[i] === g));
+    let datesHtml = '';
+    if (g.started || g.finished) {
+        const parts = [];
+        if (g.started) parts.push(`<span class="d-date-label">${t('started')}</span> <span class="d-date-value">${g.started}</span>`);
+        if (g.finished) parts.push(`<span class="d-date-label">${t('finished')}</span> <span class="d-date-value">${g.finished}</span>`);
+        datesHtml = `<div class="d-dates">${parts.join('<span class="d-date-sep">—</span>')}</div>`;
+    }
+
+    const prog = g.progress || { current: 0, total: 1 };
+    const pct = Math.round(prog.current / prog.total * 100);
+    const progressHtml = `<div class="d-progress">
+        <span class="d-progress-label">${t('progress')}</span>
+        <div class="d-progress-track"><div class="d-progress-fill" style="width:${pct}%"></div></div>
+        <span class="d-progress-value">${prog.current}/${prog.total}</span>
+    </div>`;
+
+    detail.innerHTML =
+        `<div class="d-title-row"><span class="d-title">${gName(g).toUpperCase()}</span><span class="d-type" style="background:${TCOLORS[g.category]}">${catLabel}</span>${ct}</div>` +
+        `<div class="d-desc">${gDesc(g)}</div>` +
+        progressHtml +
+        `<div class="d-bottom-row">${datesHtml}<div class="d-stars">${g.difficulty}</div></div>`;
 }
 
 // ===== LANGUAGE =====
 function setLang(l) {
     lang = l;
     localStorage.setItem(LK, l);
-
-    // Toggle buttons
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
-
-    // Update static UI text
     hTitle.textContent = t('title');
     hDeadline.textContent = t('deadline');
     hCompletion.textContent = t('completion');
-
-    // Update filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        const key = btn.dataset.key;
-        const dot = btn.querySelector('.fdot');
-        const label = t(key);
-        btn.innerHTML = (dot ? dot.outerHTML : '') + label;
-    });
-
-    // Re-render
-    render();
-    if (sel) select(sel);
-    else detail.innerHTML = `<p>${t('select')}</p>`;
+    buildRows();
+    updateWheel(false);
+    track.offsetHeight;
+    track.style.transition = '';
+    showDetail();
 }
 
 document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => setLang(btn.dataset.lang));
 });
 
-// ===== FILTERS =====
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        filter = btn.dataset.cat;
-        const goals = filtered();
-        if (!goals.includes(sel) && goals.length) sel = goals[0];
-        render();
-        if (sel) select(sel);
-    });
-});
-
-// ===== TOGGLE CAUGHT (double-click) =====
-list.addEventListener('dblclick', () => {
-    if (!sel) return;
-    sel.caught = !sel.caught;
-    if (sel.caught) caught.add(sel.id); else caught.delete(sel.id);
-    localStorage.setItem(SK, JSON.stringify([...caught]));
-    render();
-    select(sel);
-});
-
-// ===== KEYBOARD =====
-document.addEventListener('keydown', e => {
-    const goals = filtered();
-    const idx = sel ? goals.indexOf(sel) : -1;
-    if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const n = idx < goals.length - 1 ? idx + 1 : 0;
-        select(goals[n]); render();
-        list.querySelectorAll('.row')[n]?.scrollIntoView({ block: 'nearest' });
-    }
-    if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const p = idx > 0 ? idx - 1 : goals.length - 1;
-        select(goals[p]); render();
-        list.querySelectorAll('.row')[p]?.scrollIntoView({ block: 'nearest' });
-    }
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (!sel) return;
-        sel.caught = !sel.caught;
-        if (sel.caught) caught.add(sel.id); else caught.delete(sel.id);
-        localStorage.setItem(SK, JSON.stringify([...caught]));
-        render(); select(sel);
-    }
-});
-
-// ===== AGE & COUNTDOWN =====
+// ===== COUNTDOWN =====
 function updateHud() {
     const now = new Date(), bd = TRAINER.birthday;
     const target = new Date(bd.getFullYear() + TRAINER.target, bd.getMonth(), bd.getDate());
@@ -203,5 +243,4 @@ function updateHud() {
 // ===== INIT =====
 setLang(lang);
 updateHud();
-if (GOALS.length) select(GOALS[0]);
 setInterval(updateHud, 1000);
