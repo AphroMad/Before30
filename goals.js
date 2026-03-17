@@ -80,9 +80,24 @@ const GOALS = [
     { category:"health",   pokemonId:658, difficulty:"★★★★★", caught:false,
       en: { name:"IronMan 70.3",       desc:"Complete a 70.3 IronMan triathlon." },
       fr: { name:"Semi IronMan",   desc:"Terminer un Semi IronMan." } },
+    { category:"health",   pokemonId:701, difficulty:"★★★★☆", caught:false,
+      en: { name:"Backflip",       desc:"Learn to do a backflip." },
+      fr: { name:"Backflip",   desc:"Apprendre à faire un backflip." } },
+    { category:"health",   pokemonId:68, difficulty:"★★★☆☆", caught:false,
+      en: { name:"Get jacked",       desc:"Build significant muscle mass and strength." },
+      fr: { name:"Se muscler",   desc:"Développer une masse musculaire et une force significatives." } },
     { category:"health",   pokemonId:307, difficulty:"★★★☆☆", caught:false,
       en: { name:"Meditation",    desc:"Meditate every day for 30 days straight." },
       fr: { name:"Méditation",  desc:"Méditer chaque jour pendant 30 jours d'affilée." } },
+    { category:"health",   pokemonId:538, difficulty:"★★★☆☆", caught:false,
+      en: { name:"Learn to Fight",    desc:"Learn the basics of self-defense and martial arts." },
+      fr: { name:"Apprendre à se battre",  desc:"Apprendre les bases de l'autodéfense et des arts martiaux." } },
+    { category:"health",   pokemonId:106, difficulty:"★★★☆☆", caught:false,
+      en: { name:"1m jump",    desc:"Keep training my jumps to be able to jump 1 meter high." },
+      fr: { name:"Saut de 1m",  desc:"Continuer à m'entraîner pour pouvoir sauter à 1 mètre de hauteur." } },
+    { category:"health",   pokemonId:151, difficulty:"★★★☆☆", caught:false,
+      en: { name:"Becoming myself",    desc:"Understanding myself, what I like, don't like, and building self-confidence." },
+      fr: { name:"Devenir moi-même",  desc:"Me comprendre, ce que j'aime, ce que je n'aime pas, et développer ma confiance en moi." } },
 
     // Culture
     { category:"creative", pokemonId:272, difficulty:"★★★★☆", caught:false,
@@ -97,6 +112,13 @@ const GOALS = [
     { category:"creative", pokemonId:294, difficulty:"★★★☆☆", caught:false,
       en: { name:"Learn to sing",      desc:"Become decent at singing. Being able to perform in front of others." },
       fr: { name:"Apprendre à chanter",    desc:"Devenir compétent en chant. Être capable de chanter devant d'autres gens pour le plaisir." } },
+    { category:"creative", pokemonId:448, difficulty:"★★★☆☆", caught:false,
+      en: { name:"Building a community",      desc:"Share my journey online, showing people it's possible, allowing them to dream and to work towards those dreams." },
+      fr: { name:"Créer une communauté",    desc:"Partager mon parcours en ligne, montrer aux gens que tout est possible, et leur permettre de rêver et de travailler pour atteindre ces rêves." } },
+    { category:"creative", pokemonId:925, difficulty:"★★★☆☆", caught:false,
+      en: { name:"Help my family",      desc:"Support and assist my family in various ways." },
+      fr: { name:"Aider ma famille",    desc:"Soutenir et aider ma famille avec tout ce que j'ai." } },
+
 
     // TRAVEL
     { category:"travel",   pokemonId:303, difficulty:"★★★★☆", caught:false,
