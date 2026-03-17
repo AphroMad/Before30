@@ -294,6 +294,11 @@ body {
         0 1px 2px rgba(0,0,0,0.1);
 }
 
+/* Kill row transitions during infinite-scroll snap */
+.list-track.snapping .row {
+    transition: none !important;
+}
+
 /* Wheel depth levels */
 .row.depth-1 { opacity: 0.65; transform: scale(0.93) translateX(40px); }
 .row.depth-2 { opacity: 0.45; transform: scale(0.86) translateX(90px); }

@@ -134,14 +134,20 @@ function snapToMiddle() {
     if (virtualIdx < N || virtualIdx >= 2 * N) {
         selIdx = wrap(selIdx);
         virtualIdx = N + selIdx;
+
+        // Suppress row transitions during snap so rows don't animate in
+        track.classList.add('snapping');
         updateWheel(false);
-        // Force reflow then restore transition
-        track.offsetHeight;
+        track.offsetHeight; // force reflow
+        track.classList.remove('snapping');
         track.style.transition = '';
     }
 }
 
-track.addEventListener('transitionend', snapToMiddle);
+track.addEventListener('transitionend', e => {
+    if (e.target !== track) return; // ignore bubbled events from child rows
+    snapToMiddle();
+});
 
 // ===== NAVIGATE =====
 function navigate(delta) {
