@@ -22,41 +22,39 @@ body {
 /* ========= PARALLAX BACKGROUND ========= */
 .bg-layer {
     position: fixed;
-    inset: 0;
-    background-repeat: repeat-x;
-    background-size: auto 100%;
+    top: 0; bottom: 0;
+    left: -100vw;
+    width: 300vw;
     pointer-events: none;
     image-rendering: pixelated;
+    background-repeat: repeat-x;
 }
 .bg-sky {
     z-index: -3;
     background-image: url('bg/fond3.png');
-    background-position: center bottom;
     background-size: cover;
+    background-position: center bottom;
+    left: 0;
+    width: 100%;
 }
 .bg-clouds {
     z-index: -2;
     background-image: url('bg/fond1.png');
-    background-position: center center;
-    background-size: auto 60%;
-    animation: cloud-drift 60s linear infinite;
+    background-size: 100vw 60%;
+    background-position: left center;
+    animation: layer-drift 60s linear infinite;
 }
 .bg-grass {
     z-index: -1;
     background-image: url('bg/fond2.png');
-    background-position: center bottom;
-    background-size: auto 45%;
-    animation: grass-run 45s linear infinite;
+    background-size: 100vw 45%;
+    background-position: left bottom;
+    animation: layer-drift 45s linear infinite reverse;
 }
 
-@keyframes grass-run {
-    0% { background-position: 0px bottom; }
-    100% { background-position: -1400px bottom; }
-}
-
-@keyframes cloud-drift {
-    0% { background-position: 0px center; }
-    100% { background-position: 1400px center; }
+@keyframes layer-drift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100vw); }
 }
 
 /* ========= DS SHELL ========= */
