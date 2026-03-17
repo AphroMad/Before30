@@ -181,11 +181,6 @@ body {
     text-shadow: 1px 1px 0 #481010;
 }
 
-.deadline-sep {
-    opacity: 0.4;
-    margin: 0 6px;
-}
-
 #h-countdown {
     color: #ffc;
     margin-left: auto;
@@ -364,13 +359,6 @@ body {
 .row:not(.caught) .row-name { color: #a8a090; }
 .row.sel .row-name { color: #383020; }
 
-.row-dot {
-    width: 10px; height: 10px;
-    border-radius: 3px;
-    flex-shrink: 0;
-    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.3);
-}
-
 /* ========= DETAIL ========= */
 .dex-detail {
     border-top: 3px solid #484038;
@@ -401,6 +389,7 @@ body {
     color: #282420;
     font-size: 0.65rem;
     margin-right: auto;
+    line-height: 26px;
 }
 
 .d-type {

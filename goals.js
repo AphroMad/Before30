@@ -38,17 +38,6 @@ const LANG = {
 };
 
 // ============================================
-//  POKEMON NAMES (by pokemonId)
-// ============================================
-const PNAMES = {
-    4:'CHARMANDER',6:'CHARIZARD',25:'PIKACHU',39:'JIGGLYPUFF',
-    52:'MEOWTH',53:'PERSIAN',58:'GROWLITHE',65:'ALAKAZAM',
-    107:'HITMONCHAN',124:'JYNX',132:'DITTO',137:'PORYGON',
-    144:'ARTICUNO',149:'DRAGONITE',150:'MEWTWO',257:'BLAZIKEN',
-    376:'METAGROSS',384:'RAYQUAZA'
-};
-
-// ============================================
 //  LIFE GOALS — name/description per language
 // ============================================
 const GOALS = [
@@ -115,13 +104,13 @@ const GOALS = [
       en: { name:"Make a short film",    desc:"Write, shoot, and edit a short film." },
       fr: { name:"Faire un court-métrage", desc:"Écrire, tourner et monter un court-métrage." } },
     // FINANCE
-    { id:16, category:"finance",  pokemonId:53,  difficulty:"★★★☆☆", caught:false,
+    { id:15, category:"finance",  pokemonId:53,  difficulty:"★★★☆☆", caught:false,
       en: { name:"10K emergency fund",   desc:"Build a solid financial safety net." },
       fr: { name:"10K fonds d'urgence",  desc:"Constituer un filet de sécurité financier solide." } },
-    { id:17, category:"finance",  pokemonId:376, difficulty:"★★☆☆☆", caught:false,
+    { id:16, category:"finance",  pokemonId:376, difficulty:"★★☆☆☆", caught:false,
       en: { name:"Start investing",      desc:"Open a brokerage account and build a portfolio." },
       fr: { name:"Commencer à investir", desc:"Ouvrir un compte-titres et construire un portefeuille." } },
-    { id:18, category:"finance",  pokemonId:384, difficulty:"★★★★★", caught:false,
+    { id:17, category:"finance",  pokemonId:384, difficulty:"★★★★★", caught:false,
       en: { name:"Become debt-free",     desc:"Pay off all debts. Owe nothing to anyone." },
       fr: { name:"Zéro dette",           desc:"Rembourser toutes les dettes. Ne rien devoir à personne." } },
 ];

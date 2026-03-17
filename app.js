@@ -8,7 +8,8 @@ const LK = 'before30-lang';
 let selIdx = 0;
 let lang = localStorage.getItem(LK) || 'fr';
 const ROW_H = 44; // row height + gap
-const N = () => GOALS.length;
+const N = GOALS.length;
+const CAUGHT_COUNT = GOALS.filter(g => g.caught).length;
 
 // ===== DOM =====
 const $ = id => document.getElementById(id);
@@ -59,7 +60,7 @@ function emptyBallSVG() {
 }
 
 function wrap(i) {
-    return ((i % N()) + N()) % N();
+    return ((i % N) + N) % N;
 }
 
 // ===== BUILD ROWS (3x for infinite illusion) =====
@@ -81,7 +82,7 @@ function buildRows() {
                 `<span class="row-name">${gName(g).toUpperCase()}</span>`;
             row.addEventListener('click', () => {
                 selIdx = i;
-                virtualIdx = N() + i; // middle copy
+                virtualIdx = N + i; // middle copy
                 updateWheel(true);
                 showDetail();
             });
@@ -90,7 +91,7 @@ function buildRows() {
         });
     }
 
-    virtualIdx = N() + selIdx; // start in middle copy
+    virtualIdx = N + selIdx; // start in middle copy
 }
 
 // ===== WHEEL POSITION & DEPTH =====
@@ -107,7 +108,7 @@ function updateWheel(animate) {
 
     // Depth classes on ALL rows based on visual distance from virtualIdx
     rowEls.forEach((row, i) => {
-        const g = GOALS[i % N()];
+        const g = GOALS[i % N];
         const dist = Math.abs(i - virtualIdx);
 
         row.classList.remove('sel', 'depth-1', 'depth-2', 'depth-3', 'depth-4');
@@ -124,16 +125,15 @@ function updateWheel(animate) {
         }
     });
 
-    const c = GOALS.filter(g => g.caught).length;
-    pbar.style.width = (c / GOALS.length * 100) + '%';
-    pLabel.textContent = c + '/' + GOALS.length;
+    pbar.style.width = (CAUGHT_COUNT / GOALS.length * 100) + '%';
+    pLabel.textContent = CAUGHT_COUNT + '/' + GOALS.length;
 }
 
 // After the transition, silently snap back to middle copy if needed
 function snapToMiddle() {
-    if (virtualIdx < N() || virtualIdx >= 2 * N()) {
+    if (virtualIdx < N || virtualIdx >= 2 * N) {
         selIdx = wrap(selIdx);
-        virtualIdx = N() + selIdx;
+        virtualIdx = N + selIdx;
         updateWheel(false);
         // Force reflow then restore transition
         track.offsetHeight;
@@ -179,7 +179,7 @@ list.addEventListener('touchend', e => {
 function showDetail() {
     const g = GOALS[selIdx];
     sprite.src = artUrl(g.pokemonId);
-    sprite.className = g.caught ? '' : 'silhouette';
+    sprite.classList.toggle('silhouette', !g.caught);
     sNum.textContent = '#' + String(g.id).padStart(3, '0');
     sName.textContent = gName(g).toUpperCase();
 
