@@ -78,7 +78,7 @@ function buildRows() {
             row.className = 'row';
             row.innerHTML =
                 `<div class="row-ball">${g.caught ? ballSVG() : emptyBallSVG()}</div>` +
-                `<span class="row-num">${String(g.id).padStart(3, '0')}</span>` +
+                `<span class="row-num">${String(i).padStart(3, '0')}</span>` +
                 `<span class="row-name">${gName(g).toUpperCase()}</span>`;
             row.addEventListener('click', () => {
                 selIdx = i;
@@ -187,7 +187,7 @@ function showDetail() {
     sprite.src = artUrl(g.pokemonId);
     sprite.alt = gName(g);
     sprite.classList.toggle('silhouette', !g.caught);
-    sNum.textContent = '#' + String(g.id).padStart(3, '0');
+    sNum.textContent = '#' + String(selIdx).padStart(3, '0');
     sName.textContent = gName(g).toUpperCase();
 
     const ct = g.caught ? `<span class="d-caught-tag">${t('caught')}</span>` : '';
