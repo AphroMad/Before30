@@ -185,6 +185,7 @@ list.addEventListener('touchend', e => {
 function showDetail() {
     const g = GOALS[selIdx];
     sprite.src = artUrl(g.pokemonId);
+    sprite.alt = gName(g);
     sprite.classList.toggle('silhouette', !g.caught);
     sNum.textContent = '#' + String(g.id).padStart(3, '0');
     sName.textContent = gName(g).toUpperCase();
@@ -223,6 +224,7 @@ function showDetail() {
 function setLang(l) {
     lang = l;
     localStorage.setItem(LK, l);
+    document.documentElement.lang = l;
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
     hTitle.textContent = t('title');
     hDeadline.textContent = t('deadline');
@@ -244,16 +246,33 @@ function updateHud() {
     const target = new Date(bd.getFullYear() + TRAINER.target, bd.getMonth(), bd.getDate());
     const diff = Math.max(0, target - now);
     const totalSec = Math.floor(diff / 1000);
-    const d = Math.floor(totalSec / 86400);
     const h = Math.floor((totalSec % 86400) / 3600);
     const m = Math.floor((totalSec % 3600) / 60);
     const s = totalSec % 60;
-    const y = Math.floor(d / 365);
-    const mo = Math.floor((d % 365) / 30);
-    const dd = d % 30;
+
+    // Proper year/month/day diff using calendar dates
+    let y = target.getFullYear() - now.getFullYear();
+    let mo = target.getMonth() - now.getMonth();
+    let dd = target.getDate() - now.getDate();
+    if (h > 0 || m > 0 || s > 0) dd--; // partial day not yet complete
+    if (dd < 0) {
+        mo--;
+        const prevMonth = new Date(target.getFullYear(), target.getMonth(), 0);
+        dd += prevMonth.getDate();
+    }
+    if (mo < 0) { y--; mo += 12; }
+    if (diff === 0) { y = 0; mo = 0; dd = 0; }
+
     const pad = n => String(n).padStart(2, '0');
     hCountdown.textContent = `${y}y ${mo}m ${dd}d ${pad(h)}h ${pad(m)}m ${pad(s)}s`;
 }
+
+// ===== RESIZE =====
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => updateWheel(false), 100);
+});
 
 // ===== INIT =====
 setLang(lang);
