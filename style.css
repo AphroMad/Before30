@@ -482,18 +482,6 @@ body {
     border-radius: 4px;
 }
 
-.d-caught-tag {
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.38rem;
-    background: #48a848;
-    color: #fff;
-    padding: 0 8px;
-    border-radius: 4px;
-}
-
 .d-desc { color: #685850; margin: 6px 0; font-size: 0.55rem; }
 
 /* Bottom row: dates left, stars right */

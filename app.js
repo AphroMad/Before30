@@ -29,10 +29,15 @@ const hCompletion = $('h-completion');
 function t(key) { return LANG[lang][key] || LANG.en[key] || key; }
 function gName(g) { return (g[lang] || g.en).name; }
 function gDesc(g) { return (g[lang] || g.en).desc; }
+function compact(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'k';
+    return String(n);
+}
 
 const TCOLORS = {
-    career:'#f08030', travel:'#6890f0', health:'#78c850',
-    personal:'#f85888', creative:'#a040a0', finance:'#b8a038'
+    career:'#f08030', travel:'#6890f0', sport:'#78c850',
+    music:'#c03028', mind:'#f85888', creative:'#a040a0', personal:'#b8a038'
 };
 
 function artUrl(id) {
@@ -190,7 +195,6 @@ function showDetail() {
     sNum.textContent = '#' + String(selIdx).padStart(3, '0');
     sName.textContent = gName(g).toUpperCase();
 
-    const ct = g.caught ? `<span class="d-caught-tag">${t('caught')}</span>` : '';
     const catLabel = t(g.category);
 
     const startVal = g.started || '—';
@@ -201,23 +205,30 @@ function showDetail() {
         <span class="d-date-label">${t('finished')}</span> <span class="d-date-value">${finishVal}</span>
     </div>`;
 
-    const prog = g.progress || { current: 0, total: 1 };
+    const prog = g.progress || (g.caught ? { current: 1, total: 1 } : { current: 0, total: 1 });
     const pct = Math.round(prog.current / prog.total * 100);
+    const unit = prog.unit || '';
     const progressHtml = `<div class="d-progress">
         <span class="d-progress-label">${t('progress')}</span>
-        <div class="d-progress-track"><div class="d-progress-fill" style="width:${pct}%"></div></div>
-        <span class="d-progress-value">${prog.current}/${prog.total}</span>
+        <div class="d-progress-track"><div class="d-progress-fill" style="width:0%" data-target="${pct}"></div></div>
+        <span class="d-progress-value">${compact(prog.current)}/${compact(prog.total)}${unit ? ' ' + unit : ''}</span>
     </div>`;
 
     detail.innerHTML =
         `<div class="d-top">` +
-            `<div class="d-title-row"><span class="d-title">${gName(g).toUpperCase()}</span><span class="d-type" style="background:${TCOLORS[g.category]}">${catLabel}</span>${ct}</div>` +
+            `<div class="d-title-row"><span class="d-title">${gName(g).toUpperCase()}</span><span class="d-type" style="background:${TCOLORS[g.category]}">${catLabel}</span></div>` +
             `<div class="d-desc">${gDesc(g)}</div>` +
         `</div>` +
         `<div class="d-bottom">` +
             progressHtml +
             `<div class="d-bottom-row">${datesHtml}<div class="d-stars">${g.difficulty}</div></div>` +
         `</div>`;
+
+    // Animate progress fill
+    requestAnimationFrame(() => {
+        const fill = detail.querySelector('.d-progress-fill');
+        if (fill) fill.style.width = fill.dataset.target + '%';
+    });
 }
 
 // ===== LANGUAGE =====
