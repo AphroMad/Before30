@@ -39,14 +39,14 @@ body {
 .bg-clouds {
     z-index: -2;
     background-image: url('bg/fond1.png');
-    background-size: 100vw 60%;
+    background-size: 100vw auto;
     background-position: left center;
     animation: layer-drift 60s linear infinite;
 }
 .bg-grass {
     z-index: -1;
     background-image: url('bg/fond2.png');
-    background-size: 100vw 45%;
+    background-size: 100vw auto;
     background-position: left bottom;
     animation: layer-drift 45s linear infinite reverse;
 }

@@ -283,6 +283,12 @@ let resizeTimer;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => updateWheel(false), 100);
+    // restart bg animations so vw units recalculate
+    document.querySelectorAll('.bg-layer').forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight;           // force reflow
+        el.style.animation = '';
+    });
 });
 
 // ===== INIT =====
