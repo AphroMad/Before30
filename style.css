@@ -40,7 +40,7 @@ body {
     z-index: -2;
     background-image: url('bg/fond1.png');
     background-size: 100vw auto;
-    background-position: left center;
+    background-position: left calc(50% - 20vh);
     animation: layer-drift 60s linear infinite;
 }
 .bg-grass {
@@ -62,6 +62,7 @@ body {
     z-index: 1;
     width: 100%;
     max-width: 800px;
+    min-width: 0;
     max-height: 85vh;
     display: flex;
     flex-direction: column;
@@ -188,6 +189,7 @@ body {
     align-items: center;
     gap: 10px;
     border-bottom: 3px solid #481010;
+    flex-shrink: 0;
 }
 
 .header-ball {
@@ -209,12 +211,6 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.progress-lbl {
-    font-size: 0.4rem;
-    color: #fcc;
-    white-space: nowrap;
 }
 
 .header-right .pbar-track {
@@ -246,12 +242,14 @@ body {
     display: flex;
     align-items: center;
     border-bottom: 3px solid #481010;
+    flex-shrink: 0;
 }
 
 .dex-deadline span {
     font-size: 0.48rem;
     color: #fdd;
     text-shadow: 1px 1px 0 #481010;
+    white-space: nowrap;
 }
 
 #h-countdown {
@@ -264,6 +262,9 @@ body {
 .dex-body {
     display: flex;
     height: 340px;
+    /* Squeezed first when vertical space is tight, so the detail below never scrolls */
+    min-height: 120px;
+    flex-shrink: 1;
 }
 
 /* --- Left: sprite --- */
@@ -325,6 +326,7 @@ body {
 /* --- Right: list --- */
 .dex-right {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     padding: 0 0 0 12px;
@@ -442,9 +444,7 @@ body {
     border-top: 3px solid #484038;
     background: #d8d0b8;
     padding: 12px 16px;
-    min-height: 120px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
 }
 
 .detail-text {
@@ -563,55 +563,36 @@ body {
 @media (max-width: 600px) {
     .ds { max-width: 100%; padding: 10px 8px 8px; }
     .screen-bezel { padding: 6px; }
+    .dex-header { flex-wrap: wrap; row-gap: 6px; }
     .dex-header > span { font-size: 0.6rem; }
-    .header-right { display: none; }
 
-    .dex-deadline {
+    /* All countdown units (down to seconds) must fit on one line */
+    .dex-deadline span { font-size: min(0.48rem, 1.75vw); }
+
+    .dex-left { padding: 8px; }
+    .sprite-label {
         flex-direction: column;
         align-items: flex-start;
         gap: 4px;
     }
-    .dex-deadline span { font-size: 0.55rem; }
-    #h-countdown {
-        margin-left: 0;
-    }
-
-    .dex-body {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .dex-left {
-        width: 100%;
-        flex-direction: row;
-        border-right: none;
-        border-bottom: 3px solid #484038;
-        padding: 8px 12px;
-        gap: 10px;
-        justify-content: flex-start;
-    }
-
-    .sprite-box {
-        width: 100px;
-        max-width: 100px;
-        flex-shrink: 0;
-    }
-
-    .sprite-label {
-        width: auto;
-        flex: 1;
-        flex-wrap: wrap;
-    }
-    .sprite-label span { font-size: 0.55rem; }
-
-    .dex-right {
-        padding: 0 0 0 12px;
-        max-height: 180px;
-    }
+    .sprite-label span { font-size: 0.45rem; }
+    #s-name { margin-left: 0; }
 
     .row { min-height: 36px; padding: 0 28px 0 8px; }
     .row-name, .row-num { font-size: 0.5rem; }
 
-    .d-dates { flex-direction: column; align-items: flex-start; gap: 3px; }
-    .d-date-sep { display: none; }
+    .d-bottom-row { flex-wrap: wrap; gap: 6px 0; }
+    .d-dates { font-size: 0.4rem; gap: 4px; }
+    .d-stars { font-size: 1rem; letter-spacing: 3px; }
+
+    .bg-clouds {
+        background-position: left calc(50% - 32vh);
+    }
+    /* Raise the grass line toward the center; solid green fills the strip below it */
+    .bg-grass {
+        background-image: url('bg/fond2.png'), linear-gradient(#71af6a, #71af6a);
+        background-size: 100vw auto, 100% 13vh;
+        background-position: left calc(100% - 13vh), left bottom;
+        background-repeat: repeat-x, no-repeat;
+    }
 }

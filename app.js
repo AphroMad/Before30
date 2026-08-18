@@ -24,7 +24,6 @@ const pLabel = $('pbar-label');
 const hCountdown = $('h-countdown');
 const hTitle = $('h-title');
 const hDeadline = $('h-deadline');
-const hCompletion = $('h-completion');
 
 function t(key) { return LANG[lang][key] || LANG.en[key] || key; }
 function gName(g) { return (g[lang] || g.en).name; }
@@ -37,7 +36,8 @@ function compact(n) {
 
 const TCOLORS = {
     career:'#f08030', travel:'#6890f0', sport:'#78c850',
-    music:'#c03028', mind:'#f85888', creative:'#a040a0', personal:'#b8a038'
+    music:'#c03028', mind:'#f85888', creative:'#a040a0', personal:'#b8a038',
+    unknown:'#a8a878'
 };
 
 function artUrl(id) {
@@ -239,7 +239,6 @@ function setLang(l) {
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
     hTitle.textContent = t('title');
     hDeadline.textContent = t('deadline');
-    hCompletion.textContent = t('completion');
     buildRows();
     updateWheel(false);
     track.offsetHeight;
