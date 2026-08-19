@@ -66,8 +66,8 @@ const GOALS = [
       fr: { name:"Créer un jeu",      desc:"Créer un jeu vidéo amusant. Un jeu que les gens apprécient vraiment. Et atteindre 100k téléchargements avec !" } },
 
     { category:"mind",     pokemonId:272,  difficulty:"★★★★☆", caught:false,
-      en: { name:"Learn Spanish",         desc:"Reach conversational fluency in Spanish." },
-      fr: { name:"Apprendre l'espagnol",      desc:"Atteindre un niveau conversationnel en espagnol." } },
+      en: { name:"Spanish",         desc:"Reach conversational fluency in Spanish." },
+      fr: { name:"Espagnol",      desc:"Atteindre un niveau conversationnel en espagnol." } },
 
     { category:"career",   pokemonId:628,  difficulty:"★★★☆☆", caught:true,
       started: "2024-03-01", finished: "2025-03-01",
@@ -84,7 +84,7 @@ const GOALS = [
 
     { category:"mind",     pokemonId:65,   difficulty:"★★★★☆", caught:false,
       en: { name:"1500 elo at chess",         desc:"Reach a 1500 Elo rating in chess." },
-      fr: { name:"Atteindre 1500 elo aux échecs",      desc:"Atteindre un classement Elo de 1500 aux échecs." } },
+      fr: { name:"1500 elo aux échecs",      desc:"Atteindre un classement Elo de 1500 aux échecs." } },
 
     { category:"career",   pokemonId:115,  difficulty:"★★★★☆", caught:false,
       progress: { current:20000, total:100000, unit:"users" },
@@ -98,8 +98,8 @@ const GOALS = [
 
     { category:"personal", pokemonId:384,  difficulty:"★★☆☆☆", caught:true,
       started: "2023-09-25", finished: "2023-09-25",
-      en: { name:"Skydive",      desc:"Jump out of a plane. Once is enough." },
-      fr: { name:"Saut en parachute",    desc:"Sauter d'un avion. Une fois suffit." } },
+      en: { name:"Skydive",      desc:"Jump out of a plane alone. Once is enough." },
+      fr: { name:"Saut en parachute",    desc:"Sauter seul d'un avion. Juste une fois." } },
 
     { category:"sport",    pokemonId:68,   difficulty:"★★★☆☆", caught:false,
       progress: { current:50, total:100, unit:"kg" },
@@ -115,8 +115,8 @@ const GOALS = [
       fr: { name:"Rubik's cube en moins d'1m",    desc:"Résoudre un Rubik's cube en moins d'1 minute." } },
 
     { category:"sport",    pokemonId:382,  difficulty:"★★☆☆☆", caught:false,
-      en: { name:"Scuba diving license",      desc:"Get a scuba diving certification (PADI Open Water)." },
-      fr: { name:"Diplôme de plongée",    desc:"Obtenir un diplôme de plongée sous-marine (PADI Open Water)." } },
+      en: { name:"Scuba diving",      desc:"Get a scuba diving certification." },
+      fr: { name:"Diplôme plongée",    desc:"Obtenir un diplôme de plongée sous-marine." } },
 
     { category:"personal", pokemonId:534,  difficulty:"★★★★☆", caught:false,
       en: { name:"House flipping",     desc:"Learn the basics of electricity, plumbing, etc.. Then renovate a house." },
@@ -124,8 +124,8 @@ const GOALS = [
 
     { category:"travel",   pokemonId:144,  difficulty:"★★☆☆☆", caught:true,
       started: "2020-11-20", finished: "2020-11-20",
-      en: { name:"See the Northern Lights",      desc:"Watch the aurora borealis with my own eyes. Iceland, Norway, Lapland... wherever the sky decides." },
-      fr: { name:"Voir les aurores boréales",    desc:"Voir une aurore boréale de mes propres yeux. Islande, Norvège, Laponie... là où le ciel décide." } },
+      en: { name:"Northern Lights",      desc:"Watch the northern lights with my own eyes. Iceland, Norway, Lapland... wherever the sky decides." },
+      fr: { name:"Aurores boréales",    desc:"Voir une aurore boréale de mes propres yeux. Islande, Norvège, Laponie... là où le ciel décide." } },
 
     { category:"sport",    pokemonId:106,  difficulty:"★★★★★", caught:false,
       progress: { current:80, total:100, unit:"cm" },
@@ -143,8 +143,8 @@ const GOALS = [
       fr: { name:"Handstand stable",  desc:"Être capable de faire un handstand stable pendant au moins 30 secondes." } },
 
     { category:"mind",     pokemonId:175,  difficulty:"★★★☆☆", caught:false,
-      en: { name:"Win a poker tournament",      desc:"Win a small poker tournament." },
-      fr: { name:"Gagner un tournoi de poker",    desc:"Gagner un petit tournoi de poker." } },
+      en: { name:"Poker tournament",      desc:"Win a poker tournament." },
+      fr: { name:"Tournoi de poker",    desc:"Gagner un tournoi de poker." } },
 
     { category:"career",   pokemonId:52,   difficulty:"★★★★★", caught:false,
       progress: { current:15000, total:1000000, unit:"€" },
@@ -166,8 +166,8 @@ const GOALS = [
       fr: { name:"Muscle up",  desc:"Être capable de réaliser un muscle up." } },
 
     { category:"personal", pokemonId:925,  difficulty:"★★★☆☆", caught:false,
-      en: { name:"Take my parents on a trip",      desc:"A full trip for my parents, 100% paid by me." },
-      fr: { name:"Emmener mes parents en voyage",    desc:"Un vrai voyage pour mes parents, payé à 100% par moi." } },
+      en: { name:"Trip for parents",      desc:"A full trip for my parents, 100% paid by me." },
+      fr: { name:"Voyage pour les parents",    desc:"Un vrai voyage pour les parents, payé à 100% par moi." } },
 
     { category:"unknown",  pokemonId:132,  difficulty:"☆☆☆☆☆", caught:false,
       en: { name:"???",      desc:"Empty slot. A new quest will appear here soon..." },
