@@ -3,6 +3,10 @@ document.addEventListener('touchmove', function(e) {
     if (!e.target.closest('.list')) e.preventDefault();
 }, { passive: false });
 
+// ===== SORT BY DIFFICULTY (easiest first, empty slots last) =====
+const starCount = d => (d.match(/★/g) || []).length;
+GOALS.sort((a, b) => (starCount(a.difficulty) || 6) - (starCount(b.difficulty) || 6));
+
 // ===== STATE =====
 const LK = 'before30-lang';
 let selIdx = 0;
